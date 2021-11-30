@@ -4,6 +4,8 @@ use App\Http\Controllers\CalzadoControler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LlevarController;
+use App\Models\Llevar;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +26,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/calzado',CalzadoControler::class);
-
+Route::resource('/llevar',LlevarController::class);

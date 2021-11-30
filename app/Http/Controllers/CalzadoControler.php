@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SaveCalzado;
+use App\Models\Llevar;
 use App\Models\Calzado;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveCalzado;
+use App\Http\Controllers\Controller;
 
 class CalzadoControler extends Controller
 {
@@ -17,6 +19,13 @@ class CalzadoControler extends Controller
     {
         $calzados = Calzado::orderBy('created_at', 'desc')->paginate(10);
         return view('dashboard.ropa.index', ['calzados' => $calzados]);
+    }
+
+    private function hasOneLlevar()
+    {
+        $c = Calzado::first();
+        $l = Llevar::first();
+        $c->llevar()->save($l);
     }
 
     /**
@@ -38,6 +47,8 @@ class CalzadoControler extends Controller
     public function store(SaveCalzado $request)
     {
         Calzado::create($request->validated()); //Para poner tus validaciones personalizadas
+        LlevarController::create();
+        $this->hasOneLlevar();
         return back()->with('status', 'Calzado creado');
     }
 
@@ -84,6 +95,6 @@ class CalzadoControler extends Controller
     public function destroy(Calzado $calzado)
     {
         $calzado->delete();
-        return back()->with('status', "Libro eliminado correctamente");
+        return back()->with('status', "Calzado eliminado correctamente");
     }
 }
